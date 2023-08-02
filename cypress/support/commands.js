@@ -24,9 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+
 Cypress.Commands.add('assertTenResultsPlusMoreResultsButton', () => {
-  cy.get('.result')
-    .should('have.length', 11)
-    .last()
-    .should('contain', 'More results')
+    //Counts of search result
+    cy.get('.react-results--main li').should('have.length.greaterThan', 10)
+    cy.get('#more-results').should('contain', 'More results')
+
 })

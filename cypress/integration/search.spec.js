@@ -1,47 +1,48 @@
+//Test suit case
 describe('Search', () => {
-  const searchTerm = 'cypress.io'
+  const searchTerm = 'cypress.io';
 
   beforeEach(() => {
-    cy.intercept(
-      'GET',
-      `**?q=${searchTerm}**`
-    ).as('getSearchResults')
+    //Query searchTerm
+    cy.intercept('GET', `**?q=${searchTerm}**`).as('getSearchResults');
 
-    cy.visit('https://duckduckgo.com/')
+    cy.visit('https://duckduckgo.com/');
 
-    cy.get('form input[type="text"]')
-      .as('searchField')
-      .should('be.visible')
-  })
+    //Serachbox to write
+    cy.get('form input[type="text"]').as('searchField').should('be.visible');
+  });
 
-  it('types and hits ENTER', () => {
-    cy.get('@searchField')
-      .type(`${searchTerm}{enter}`)
+  //Test 1
+  it('Types and hits ENTER', () => {
+    cy.get('@searchField').type(`${searchTerm}{enter}`);
 
-    cy.wait('@getSearchResults')
+    cy.wait('@getSearchResults');
 
-    cy.assertTenResultsPlusMoreResultsButton()
-  })
+    //Counts of search result - command.js
+    cy.assertTenResultsPlusMoreResultsButton();
+  });
 
-  it('types and clicks the magnifying glass button', () => {
-    cy.get('@searchField')
-      .type(searchTerm)
-    cy.get('form input[type="submit"]')
-      .should('be.visible')
-      .click()
+  //Test 2
+  it('Types and clicks the magnifying glass button', () => {
+    cy.get('@searchField').type(searchTerm);
 
-    cy.wait('@getSearchResults')
+    cy.get('button[type="submit"]').should('be.visible').click();
 
-    cy.assertTenResultsPlusMoreResultsButton()
-  })
+    cy.wait('@getSearchResults');
 
-  it('types and submits the form directly', () => {
-    cy.get('@searchField')
-      .type(searchTerm)
-    cy.get('form').submit()
+    //Counts of search result - command.js
+    cy.assertTenResultsPlusMoreResultsButton();
+  });
 
-    cy.wait('@getSearchResults')
+  //Test 3
+  it('Types and submits the form directly', () => {
+    cy.get('@searchField').type(searchTerm);
 
-    cy.assertTenResultsPlusMoreResultsButton()
-  })
-})
+    cy.get('form').submit();
+
+    cy.wait('@getSearchResults');
+
+    //Counts of search result - command.js
+    cy.assertTenResultsPlusMoreResultsButton();
+  });
+});
