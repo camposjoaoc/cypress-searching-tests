@@ -26,7 +26,7 @@
 
 
 Cypress.Commands.add('assertTenResultsPlusMoreResultsButton', () => {
-    //Counts of search result
+    //Counts of search result -the results are in a List
     cy.get('.react-results--main li').should('have.length.greaterThan', 10)
     cy.get('#more-results').should('contain', 'More results')
 
